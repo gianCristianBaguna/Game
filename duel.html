@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Battle Screen</title>
+</head>
+
+<body onload='alert("YOU HAVE ENCOUNTERED AN ENEMY!!!")'>
+    <div id="game">
+        <table>
+            <tr id="characterID">
+                <td>
+                </td>
+            </tr>
+            <tr id="enemyID">
+                <td>
+                </td>
+                <img  id="randomPNG">
+            </tr>
+        </table>
+    </div>
+    <br>
+    <div>
+        <tr>
+            <td>
+                <button onclick="attack()">Attack</button>
+                <button>Block</button>
+            </td>
+        </tr>
+    </div>
+    
+    <script src="duel.js"></script>
+</body>
+
+</html>

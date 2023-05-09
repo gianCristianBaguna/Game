@@ -1,0 +1,25 @@
+#game {
+    height: 500px;
+    width: 1000px;
+    outline: 2px solid black;
+    position: relative;
+    background-image: url('assets/background.jpg');
+}
+
+#character {
+    background-color: rgba(204, 204, 204, 0);
+    height: 50px;
+    width: 50px;
+    left: 10px;
+    top: 0px;
+    position: absolute;
+}
+
+#characterID {
+    position: absolute;
+    top: 470px;
+}
+#enemyID {
+    position: absolute;
+    left: 600px;
+}
