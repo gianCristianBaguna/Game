@@ -57,9 +57,9 @@ class Enemy {
     const action: string = attack ? 'attacks' : 'blocks';
   
     if (successful) {
-      resultDiv.innerHTML = `The Pokemon ${action} successfully!`;
+      resultDiv.innerHTML = `The Hero ${action} successfully!`;
     } else {
-      resultDiv.innerHTML = `The Pokemon ${action} but failed!`;
+      resultDiv.innerHTML = `The Hero ${action} but failed!`;
     }
   }
   
