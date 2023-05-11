@@ -23,3 +23,11 @@
     position: absolute;
     left: 600px;
 }
+#characterDuel {
+    background-color: rgba(204, 204, 204, 0);
+    height: 50px;
+    width: 50px;
+    left: 10px;
+    top: 0px;
+    position: absolute;
+}
