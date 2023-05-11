@@ -1,3 +1,5 @@
+@import url('https://fonts.cdnfonts.com/css/gumdrop');
+            
 #game {
     height: 500px;
     width: 1000px;
@@ -24,10 +26,32 @@
     left: 600px;
 }
 #characterDuel {
-    background-color: rgba(204, 204, 204, 0);
-    height: 50px;
-    width: 50px;
+    height: 200px;
+    width: 200px;
     left: 10px;
+    top: 290px;
+    position: absolute;
+}
+#characterDuelHP {
+    font-family: 'GUMDROP', sans-serif;
+    font-size: 30px;
+    color: aliceblue;
+    left: 250px;
+    top: 450px;
+    position: absolute;
+}
+#characterEnemyDuel {
+    height: 200px;
+    width: 200px;
+    left: 750px;
     top: 0px;
+    position: absolute;
+}
+#characterEnemyDuelHP {
+    font-family: 'GUMDROP', sans-serif;
+    font-size: 30px;
+    color: aliceblue;
+    left: 550px;
+    top: 160px;
     position: absolute;
 }
