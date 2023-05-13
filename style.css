@@ -1,13 +1,82 @@
 @import url('https://fonts.cdnfonts.com/css/gumdrop');
-            
+@keyframes jump {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0); }
+  }
+
+body {
+    margin-top: 50px;
+    margin-left: 18%;
+    text-align: center;
+    width: 50%;
+    top: 200px;
+    background-image: url('assets/overallBackground.png');
+    background-size: cover;
+	background-repeat: no-repeat;
+}
+h1 {
+    font-family: 'GUMDROP', sans-serif;
+    color: aliceblue;
+    text-shadow: 2.5px 2.5px 0px black, -2.5px -2.5px 0px black, 2.5px -2.5px 0px black, -2.5px 2.5px 0px black;
+    font-size: 60px;
+    margin-left: 20%;
+    margin-bottom: 1%;
+}
+h2{
+    font-family: 'GUMDROP', sans-serif;
+    color: rgb(210, 184, 36);
+    text-shadow: 2px 2px 0px black, -2px -2px 0px black, 2px -2px 0px black, -2px 2px 0px black;
+    font-size: 30px;
+    margin-top: 10%;
+    margin-left: 20%;
+}
 #game {
-    height: 500px;
-    width: 1000px;
-    outline: 2px solid black;
-    position: relative;
+    height: 480px;
+    width: 900px;
+    outline: 6px solid #761212;
+    border-radius: 2px;
+    position: absolute;
+    margin-left: 30px;
     background-image: url('assets/background.jpg');
+    position: relative;  
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
+#game::before {
+    content: ""; 
+    position: absolute; 
+    top: 100%;  
+    left: 80%;  
+    transform: translate(-50%, -50%);  
+    width: 300px;  
+    height: 100px;  
+    background-color: white;  
+    border: 2px solid black;  
+    border-radius: 5px;  
+    z-index: 1;  
+}
+
+#game::after {
+    content: "Move around to find enemy!";  
+    position: absolute;   
+    top: 100%;  
+    left: 68.5%;  
+    transform: translate(-50%, -50%);  
+    z-index: 2; 
+    font-family: 'GUMDROP', sans-serif;
+    animation: jump 0.5s ease-in-out infinite;
+}
+#duel {
+    height: 480px;
+    width: 900px;
+    outline: 6px solid #761212;
+    border-radius: 2px;
+    position: absolute;
+    margin-bottom: 0%;
+    background-image: url('assets/duelBackground.png');
+}
 #character {
     background-color: rgba(204, 204, 204, 0);
     height: 50px;
@@ -16,42 +85,92 @@
     top: 0px;
     position: absolute;
 }
-
-#characterID {
-    position: absolute;
-    top: 470px;
-}
-#enemyID {
-    position: absolute;
-    left: 600px;
-}
 #characterDuel {
     height: 200px;
     width: 200px;
     left: 10px;
-    top: 290px;
+    top: 260px;
     position: absolute;
 }
 #characterDuelHP {
     font-family: 'GUMDROP', sans-serif;
+    text-shadow: 1px 1px 0px black, -1px -1px 0px black, 1px -1px 0px black, -1px 1px 0px black;
     font-size: 30px;
     color: aliceblue;
     left: 250px;
-    top: 450px;
+    top: 420px;
     position: absolute;
 }
 #characterEnemyDuel {
     height: 200px;
     width: 200px;
-    left: 750px;
-    top: 0px;
+    left: 680px;
+    top: 20px;
     position: absolute;
+    transform: scaleX(-1);
+
 }
 #characterEnemyDuelHP {
     font-family: 'GUMDROP', sans-serif;
+    text-shadow: 1px 1px 0px black, -1px -1px 0px black, 1px -1px 0px black, -1px 1px 0px black;
     font-size: 30px;
     color: aliceblue;
-    left: 550px;
-    top: 160px;
+    left: 500px;
+    top: 180px;
     position: absolute;
+}
+#characterSelection {
+    height: 100px;
+    width: 100px;
+    object-fit: contain;
+}
+#character-selection {
+    width: 800px;
+    margin: auto;
+  }
+  
+  table { 
+    border-collapse: collapse;
+    margin-top: 170px;
+    text-align: center;
+    margin-left: 20%;
+    margin-top: 1%;
+  }
+  
+  td {
+    border: 2px solid white;
+    padding: 50px;
+    text-align: center;
+    background-color: rgb(95, 29, 29);
+  }
+  
+  td:hover {
+    background-color: #f1c40f;
+  }
+
+
+button {
+    border-radius: 20px;
+    background-color:#761212;
+}
+
+#heroButtons {
+    margin-top: 480px;
+    font-size: 20px;
+    width: 200px;
+    height: 50px;
+}
+  
+button span {
+    display: inline-block;
+    font-family: 'GUMDROP', sans-serif;
+    color:#f1c40f;
+    padding: 10px;  
+}
+
+.jump {
+    animation: jump 0.5s ease-in-out infinite;
+}
+.jump2 {
+    animation: jump 0.9s ease-in-out infinite;
 }

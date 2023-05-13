@@ -45,10 +45,10 @@ function duels(attack) {
     var successful = probability >= 30; // 70% chance of success
     var action = attack ? 'attacks' : 'blocks';
     if (successful) {
-        resultDiv.innerHTML = "The Pokemon ".concat(action, " successfully!");
+        resultDiv.innerHTML = "The Hero ".concat(action, " successfully!");
     }
     else {
-        resultDiv.innerHTML = "The Pokemon ".concat(action, " but failed!");
+        resultDiv.innerHTML = "The Hero ".concat(action, " but failed!");
     }
 }
 attackBtn.addEventListener('click', function () { return duels(true); });
