@@ -1,42 +1,46 @@
-class Sprites{
-  name: string;
-  hp: number;
-  attackDamage: 10;
+class Hero{
+	name: string;
+	sprite: string;
+	hp: number;
+	fullhp: number;
+	moves: Array<[string, number?]>;
 
-  constructor(name: string, hp: number){
-    this.name = name
-    this.hp = hp
-  }
-
-  attack(target: Sprites){
-    let criticalDamage = this.attackDamage * 2
-    let firstNumber: number = Math.floor(Math.random() * 10)
-    let secondNumber: number = Math.floor(Math.random() * 10)
-    if(firstNumber === secondNumber) {
-      target.hp -= criticalDamage
-
-      if(target.hp < 0){
-        target.hp = 0
-        alert('You Win!')
-      }
-      if(this.hp < 0){
-        this.hp = 0
-        alert('You Lose!')
-      }
-    }
-    else{
-      target.hp -= this.attackDamage
-    }
-  }
+	constructor(name: string, sprite: string, hp: number, moves: Array<[string, number?]>) {
+		this.name = name;
+		this.sprite = sprite;
+		this.hp = hp;
+		this.fullhp = hp;
+		this.moves = moves;
+	}
 }
 
-
-let krilin = new Sprites('Krilin', 120)
-let venom = new Sprites('Venom', 120)
-let button = document.getElementById('attack')
-button?.addEventListener('click', () => {
-  krilin.attack(venom)
-})
-
-console.log(`${button}`)
+let mememons: Mememon[] = [
+	[
+		"Goku",
+		"assets/dragonBalls/goku.png",
+		100,
+		[
+			["Attack", 10],
+			["Heal", 10]
+		],
+	],
+	[
+		"Gohan",
+		"assets/dragonBalls/gohan.png",
+		100,
+		[
+			["Attack", 10],
+			["Heal", 10]
+		],
+	],
+	[
+		"Trunks",
+		"assets/dragonBalls/trunks.png",
+		100,
+		[
+			["Attack", 10],
+			["Heal", 10]
+		],
+	],
+].map(([name, sprite, hp]) => new Mememon(name, sprite, hp, moves));
 
