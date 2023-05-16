@@ -42,6 +42,70 @@ let heroes: Hero[] = [
 			["Heal", 10]
 		],
 	],
+	[
+		"Krilin",
+		"assets/dragonBalls/krilin.png",
+		100,
+		[
+			["Attack", 10],
+			["Heal", 10]
+		],
+	],
+	[
+		"Android 18",
+		"assets/dragonBalls/android18.png",
+		100,
+		[
+			["Attack", 10],
+			["Heal", 10]
+		],
+	],
+	[
+		"Captain America",
+		"assets/marvel/captainAmerica.png",
+		100,
+		[
+			["Attack", 10],
+			["Heal", 10]
+		],
+	],
+	[
+		"Hulk",
+		"assets/marvel/hulk.png",
+		100,
+		[
+			["Attack", 10],
+			["Heal", 10]
+		],
+	],
+	[
+		"Iron Man",
+		"assets/marvel/ironman.png",
+		100,
+		[
+			["Attack", 10],
+			["Heal", 10]
+		],
+	],
+	[
+		"Spiderman",
+		"assets/marvel/spiderman.png",
+		100,
+		[
+			["Attack", 10],
+			["Heal", 10]
+		],
+	],
+	[
+		"Thor",
+		"assets/marvel/thor.png",
+		100,
+		[
+			["Attack", 10],
+			["Heal", 10]
+		],
+	],
+	
 ].map(([name, sprite, hp]) => new Mememon(name, sprite, hp, moves));
 
 let typeMatch: { [key: string]: string[][] } = {
