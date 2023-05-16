@@ -2,7 +2,7 @@ var gameDiv = document.getElementById('game');
 var charDiv = document.getElementById('character');
 var charLeftAdd = 0;
 var charTopAdd = 0;
-var isCharFlipped = false; // added variable to track if image is flipped
+var isCharFlipped = false; 
 function handlKeys(arrow) {
     var keyPress = arrow.code;
     if (keyPress === 'ArrowRight') {
