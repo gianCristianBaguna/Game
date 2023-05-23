@@ -1,40 +1,85 @@
-var goku = document.getElementById('goku');
-var gohan = document.getElementById('gohan');
-var trunks = document.getElementById('trunks');
-var android18 = document.getElementById('android18');
-var krilin = document.getElementById('krilin');
-var captainAmerica = document.getElementById('captainAmerica');
-var ironman = document.getElementById('ironman');
-var thor = document.getElementById('thor');
-var hulk = document.getElementById('hulk');
-var spiderman = document.getElementById('spiderman');
-goku.addEventListener('click', function () {
-    window.location.href = 'goku.html';
-});
-gohan.addEventListener('click', function () {
-    window.location.href = 'gohan.html';
-});
-trunks.addEventListener('click', function () {
-    window.location.href = 'trunks.html';
-});
-android18.addEventListener('click', function () {
-    window.location.href = 'android18.html';
-});
-krilin.addEventListener('click', function () {
-    window.location.href = 'krilin.html';
-});
-captainAmerica.addEventListener('click', function () {
-    window.location.href = 'captainAmerica.html';
-});
-ironman.addEventListener('click', function () {
-    window.location.href = 'ironman.html';
-});
-thor.addEventListener('click', function () {
-    window.location.href = 'thor.html';
-});
-hulk.addEventListener('click', function () {
-    window.location.href = 'hulk.html';
-});
-spiderman.addEventListener('click', function () {
-    window.location.href = 'spiderman.html';
-});
+var CharacterPicker = /** @class */ (function () {
+    function CharacterPicker() {
+        this.characterSelectionDiv = document.getElementById('character-selection');
+        this.attachCharacterSelectionEvents();
+    }
+    CharacterPicker.prototype.attachCharacterSelectionEvents = function () {
+        var characterSelectionLinks = this.characterSelectionDiv.getElementsByTagName('a');
+        for (var i = 0; i < characterSelectionLinks.length; i++) {
+            characterSelectionLinks[i].addEventListener('click', this.handleCharacterSelection.bind(this));
+        }
+    };
+    CharacterPicker.prototype.handleCharacterSelection = function (event) {
+        var target = event.target;
+        var characterName = target.parentElement.id;
+        var gameDiv = document.createElement('div');
+        gameDiv.id = 'game';
+        var characterImg = document.createElement('img');
+        characterImg.src = target.src;
+        characterImg.classList.add('character');
+        characterImg.id = 'character';
+        gameDiv.appendChild(characterImg);
+        document.body.innerHTML = '';
+        document.body.appendChild(gameDiv);
+        var game = new Game(characterName);
+    };
+    return CharacterPicker;
+}());
+var Game = /** @class */ (function () {
+    function Game(characterName) {
+        this.characterName = characterName;
+        this.charDiv = document.getElementById('character');
+        this.charLeftAdd = 0;
+        this.charTopAdd = 0;
+        this.isCharFlipped = false;
+        document.addEventListener('keydown', this.handleKeys.bind(this));
+        document.addEventListener('keydown', this.randomEnemy.bind(this));
+    }
+    Game.prototype.handleKeys = function (arrow) {
+        var keyPress = arrow.code;
+        if (keyPress === 'ArrowRight') {
+            this.charLeftAdd += 10;
+            if (this.charLeftAdd >= 860) {
+                this.charLeftAdd -= 10;
+            }
+            if (this.isCharFlipped) {
+                this.charDiv.style.transform = 'scaleX(1)';
+                this.isCharFlipped = false;
+            }
+        }
+        if (keyPress === 'ArrowLeft') {
+            this.charLeftAdd -= 10;
+            if (this.charLeftAdd <= 1) {
+                this.charLeftAdd += 10;
+            }
+            this.charDiv.style.transform = 'scaleX(-1)';
+            this.isCharFlipped = true;
+        }
+        if (keyPress === 'ArrowUp') {
+            this.charTopAdd -= 10;
+            if (this.charTopAdd <= 1) {
+                this.charTopAdd = 0;
+            }
+        }
+        if (keyPress === 'ArrowDown') {
+            this.charTopAdd += 10;
+            if (this.charTopAdd >= 420) {
+                this.charTopAdd = 430;
+            }
+        }
+        this.charDiv.style.left = this.charLeftAdd + 'px';
+        this.charDiv.style.top = this.charTopAdd + 'px';
+    };
+    Game.prototype.randomEnemy = function () {
+        var probability = Math.floor(Math.random() * 100);
+        var randomProbability = Math.floor(Math.random() * 20);
+        if (probability === randomProbability) {
+            window.location.href = 'duel.html';
+            return;
+        }
+    };
+    return Game;
+}());
+window.onload = function () {
+    var characterPicker = new CharacterPicker();
+};
