@@ -9,32 +9,20 @@ var thor = document.getElementById('thor');
 var hulk = document.getElementById('hulk');
 var spiderman = document.getElementById('spiderman');
 goku.addEventListener('click', function () {
-    window.location.href = 'game.html';
+    window.location.href = 'goku.html';
 });
 gohan.addEventListener('click', function () {
-    window.location.href = 'game.html';
+    window.location.href = 'gohan.html';
 });
 trunks.addEventListener('click', function () {
-    window.location.href = 'game.html';
-});
-android18.addEventListener('click', function () {
-    window.location.href = 'game.html';
-});
-krilin.addEventListener('click', function () {
-    window.location.href = 'game.html';
+    window.location.href = 'trunks.html';
 });
 captainAmerica.addEventListener('click', function () {
-    window.location.href = 'game.html';
+    window.location.href = 'captainAmerica.html';
 });
 ironman.addEventListener('click', function () {
-    window.location.href = 'game.html';
+    window.location.href = 'ironman.html';
 });
 thor.addEventListener('click', function () {
-    window.location.href = 'game.html';
-});
-hulk.addEventListener('click', function () {
-    window.location.href = 'game.html';
-});
-spiderman.addEventListener('click', function () {
-    window.location.href = 'game.html';
+    window.location.href = 'thor.html';
 });

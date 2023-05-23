@@ -14,6 +14,7 @@ body {
     background-image: url('assets/overallBackground.png');
     background-size: cover;
 	background-repeat: no-repeat;
+    position:static;
 }
 h1 {
     font-family: 'GUMDROP', sans-serif;
@@ -133,13 +134,13 @@ table {
     border-collapse: collapse;
     margin-top: 170px;
     text-align: center;
-    margin-left: -3%;
+    margin-left: 5%;
     margin-top: 1%;
 }
   
 td {
     border: 2px solid white;
-    padding: 50px;
+    padding: 35px;
     text-align: center;
     background-color: rgb(95, 29, 29);
 }
@@ -173,5 +174,13 @@ button span {
 }
 .jump2 {
     animation: jump 0.9s ease-in-out infinite;
+}
+b {
+    font-family: 'GUMDROP', sans-serif;
+    color: rgb(210, 184, 36);
+    text-shadow: 2px 2px 0px black, -2px -2px 0px black, 2px -2px 0px black, -2px 2px 0px black;
+    font-size: 20px;
+    position: relative;
+    top: 15px;
 }
 
