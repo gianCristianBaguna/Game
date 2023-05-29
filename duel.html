@@ -9,30 +9,14 @@
     <title>Battle Screen</title>
 </head>
 
-<body onload='alert("YOU HAVE ENCOUNTERED AN ENEMY!!!")'>
+<body>
     <h1>Dragon Balls vs Marvels</h1>
-    <div id="duel">
-        <table>
-            <tr>
-                <img src="assets/dragonBalls/goku.png" class="jump2" id="characterDuel">
-                <div id="characterDuelHP">HP:</div>
-            </tr>
-            <tr id="enemyID">
-                <div id="characterEnemyDuelHP">HP:</div>
-                <img src="" class="jump2" id="characterEnemyDuel">
-            </tr>
-        </table>
-    </div>
+    <canvas id="battleCanvas" width="800" height="600"></canvas>
     <br>
     <div id="heroButtons">
-        <tr>
-            <td>
-                <button id="attack"><span>Attack</span></button>
-                <button id="skill"><span>Skill</span></button>
-            </td>
-        </tr>
+        <button id="attack"><span>Attack</span></button>
     </div>
-    
+
     <script src="duel.js"></script>
 </body>
 

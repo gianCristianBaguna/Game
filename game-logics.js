@@ -11,17 +11,19 @@ var CharacterPicker = /** @class */ (function () {
     };
     CharacterPicker.prototype.handleCharacterSelection = function (event) {
         var target = event.target;
-        var characterName = target.parentElement.id;
-        var gameDiv = document.createElement('div');
-        gameDiv.id = 'game';
-        var characterImg = document.createElement('img');
-        characterImg.src = target.src;
-        characterImg.classList.add('character');
-        characterImg.id = 'character';
-        gameDiv.appendChild(characterImg);
-        document.body.innerHTML = '';
-        document.body.appendChild(gameDiv);
-        var game = new Game(characterName);
+        if (target.parentElement) {
+            var characterName = target.parentElement.id;
+            var gameDiv = document.createElement('div');
+            gameDiv.id = 'game';
+            var characterImg = document.createElement('img');
+            characterImg.src = target.src;
+            characterImg.classList.add('character');
+            characterImg.id = 'character';
+            gameDiv.appendChild(characterImg);
+            document.body.innerHTML = '';
+            document.body.appendChild(gameDiv);
+            var game = new Game(characterName);
+        }
     };
     return CharacterPicker;
 }());
@@ -35,6 +37,10 @@ var Game = /** @class */ (function () {
         document.addEventListener('keydown', this.handleKeys.bind(this));
         document.addEventListener('keydown', this.randomEnemy.bind(this));
     }
+    Game.getCharacterImageSrc = function () {
+        var charDiv = document.getElementById('character');
+        return charDiv.src;
+    };
     Game.prototype.handleKeys = function (arrow) {
         var keyPress = arrow.code;
         if (keyPress === 'ArrowRight') {
