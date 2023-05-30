@@ -1,10 +1,11 @@
+var _a;
 var canvas = document.getElementById('battleCanvas');
 var ctx = canvas.getContext('2d');
 var character = {
     name: '',
     health: 100,
     damage: 20,
-    image: 'assets/dragonBalls/goku.png'
+    image: (_a = localStorage.getItem('img')) !== null && _a !== void 0 ? _a : ''
 };
 var enemies = [
     {
@@ -95,21 +96,16 @@ function drawBattle(ctx, characterImage, enemyImage) {
     ctx.fillStyle = 'green';
     ctx.fillRect(550, 180, randomEnemy.health, 10);
 }
-/// Perform an attack
 function attack() {
     var characterDamage = Math.floor(Math.random() * character.damage);
     var enemyDamage = Math.floor(Math.random() * randomEnemy.damage);
-    // Update character and enemy health
     character.health -= enemyDamage;
     randomEnemy.health -= characterDamage;
-    // Redraw the battle
     drawBattle(ctx, characterImage, enemyImage);
-    // Display attack result on the canvas
     ctx.font = '16px Arial';
     ctx.fillStyle = 'white';
     ctx.fillText("".concat(character.name, " attacks for ").concat(characterDamage, " damage!"), 50, 250);
     ctx.fillText("".concat(randomEnemy.name, " attacks for ").concat(enemyDamage, " damage!"), 550, 250);
-    // Check if the battle is over
     if (character.health <= 0 || randomEnemy.health <= 0) {
         var winner = void 0;
         if (character.health <= 0 && randomEnemy.health <= 0) {
@@ -131,7 +127,6 @@ function attack() {
         }
     }
 }
-// Reset the game with a new random enemy
 function resetGame() {
     character.health = 100;
     enemies.forEach(function (enemy) {
@@ -141,23 +136,17 @@ function resetGame() {
     enemyImage.src = randomEnemy.image;
     drawBattle(ctx, characterImage, enemyImage);
 }
-// Redirect to character selection HTML
 function redirectToCharacterSelection() {
     window.location.href = 'index.html';
 }
-// Randomly select an enemy from the array
 function getRandomEnemy() {
     return enemies[Math.floor(Math.random() * enemies.length)];
 }
-// Initialize the battle
 function initializeBattle() {
-    // Draw the initial battle state
     drawBattle(ctx, characterImage, enemyImage);
-    // Add event listener to the attack button
     var attackButton = document.getElementById('attack');
     if (attackButton) {
         attackButton.addEventListener('click', attack);
     }
 }
-// Call the initializeBattle function to start the battle
 initializeBattle();

@@ -5,7 +5,7 @@ const character = {
   name: '',
   health: 100,
   damage: 20,
-  image: 'assets/dragonBalls/goku.png',
+  image: localStorage.getItem('img') ?? ''
 };
 
 const enemies = [
@@ -105,25 +105,20 @@ function drawBattle(ctx: CanvasRenderingContext2D, characterImage: HTMLImageElem
   ctx.fillRect(550, 180, randomEnemy.health, 10);
 }
 
-/// Perform an attack
 function attack() {
 	const characterDamage = Math.floor(Math.random() * character.damage);
 	const enemyDamage = Math.floor(Math.random() * randomEnemy.damage);
   
-	// Update character and enemy health
 	character.health -= enemyDamage;
 	randomEnemy.health -= characterDamage;
-  
-	// Redraw the battle
+
 	drawBattle(ctx, characterImage, enemyImage);
   
-	// Display attack result on the canvas
 	ctx.font = '16px Arial';
 	ctx.fillStyle = 'white';
 	ctx.fillText(`${character.name} attacks for ${characterDamage} damage!`, 50, 250);
 	ctx.fillText(`${randomEnemy.name} attacks for ${enemyDamage} damage!`, 550, 250);
   
-	// Check if the battle is over
 	if (character.health <= 0 || randomEnemy.health <= 0) {
 	  let winner;
 	  if (character.health <= 0 && randomEnemy.health <= 0) {
@@ -144,9 +139,6 @@ function attack() {
 	  }
 	}
   }
-  
-
-// Reset the game with a new random enemy
 function resetGame() {
   character.health = 100;
   enemies.forEach((enemy) => {
@@ -158,27 +150,22 @@ function resetGame() {
   drawBattle(ctx, characterImage, enemyImage);
 }
 
-// Redirect to character selection HTML
+
 function redirectToCharacterSelection() {
   window.location.href = 'index.html';
 }
 
-// Randomly select an enemy from the array
 function getRandomEnemy() {
   return enemies[Math.floor(Math.random() * enemies.length)];
 }
 
-// Initialize the battle
 function initializeBattle() {
-  // Draw the initial battle state
   drawBattle(ctx, characterImage, enemyImage);
 
-  // Add event listener to the attack button
   const attackButton = document.getElementById('attack');
   if (attackButton) {
     attackButton.addEventListener('click', attack);
   }
 }
 
-// Call the initializeBattle function to start the battle
 initializeBattle();
