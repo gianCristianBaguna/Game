@@ -3,84 +3,78 @@ let ctx = canvas.getContext("2d");
 
 const character = {
   name: "",
-  health: 100,
+  health: 200,
   damage: 20,
   image: localStorage.getItem("img") ?? "",
-  statisticalPoints: 5,
+  stars: 3
 };
 
 const enemies = [
   {
     name: "Goku",
-    health: 100,
+    health: 150,
     damage: 20,
     image: "assets/dragonBalls/goku.png",
-    statisticalPoints: 5,
   },
   {
     name: "Gohan",
-    health: 100,
-    damage: 15,
+    health: 150,
+    damage: 20,
     image: "assets/dragonBalls/gohan.png",
-    statisticalPoints: 100,
   },
   {
     name: "Trunks",
-    health: 100,
-    damage: 15,
+    health: 150,
+    damage: 20,
     image: "assets/dragonBalls/trunks.png",
-    statisticalPoints: 100,
   },
   {
     name: "Android 18",
-    health: 100,
-    damage: 15,
+    health: 150,
+    damage: 20,
     image: "assets/dragonBalls/android18.png",
-    statisticalPoints: 100,
   },
   {
     name: "Krilin",
-    health: 100,
-    damage: 15,
+    health: 150,
+    damage: 20,
     image: "assets/dragonBalls/krilin.png",
-    statisticalPoints: 100,
   },
   {
     name: "Captain America",
-    health: 100,
-    damage: 15,
+    health: 150,
+    damage: 20,
     image: "assets/marvel/captainAmerica.png",
-    statisticalPoints: 100,
   },
   {
     name: "Iron Man",
-    health: 100,
-    damage: 15,
+    health: 150,
+    damage: 20,
     image: "assets/marvel/ironman.png",
-    statisticalPoints: 100,
   },
   {
     name: "Thor",
-    health: 100,
-    damage: 15,
+    health: 150,
+    damage: 20,
     image: "assets/marvel/thor.png",
-    statisticalPoints: 100,
   },
   {
     name: "Hulk",
-    health: 100,
-    damage: 15,
+    health: 150,
+    damage: 20,
     image: "assets/marvel/hulk.png",
-    statisticalPoints: 100,
   },
   {
     name: "Spiderman",
-    health: 100,
-    damage: 15,
+    health: 150,
+    damage: 20,
     image: "assets/marvel/spiderman.png",
-    statisticalPoints: 100,
   },
 ];
+
+let defeatedEnemies: { name: string; health: number; damage: number; image: string; statisticalPoints: number; }[] = [];
+
+console.log(defeatedEnemies)
 
 let randomEnemy = getRandomEnemy();
 
@@ -102,6 +96,12 @@ if (enemyFlip) {
   };
 }
 
+const specialGauge = {
+  value: 0,
+  maxValue: 100
+};
+
+
 function drawBattle(
   ctx: CanvasRenderingContext2D,
   characterImage: HTMLImageElement,
@@ -115,19 +115,36 @@ function drawBattle(
 
   ctx.fillStyle = "green";
   ctx.fillRect(50, 180, character.health, 10);
+  ctx.fillStyle = "blue";
+  ctx.fillRect(50, 100, (specialGauge.value / specialGauge.maxValue) * 100, 10);
 
   ctx.fillStyle = "green";
   ctx.fillRect(550, 180, randomEnemy.health, 10);
+  ctx.font = "16px Arial";
+  ctx.fillStyle = "yellow";
+  const starsText = "Stars: " + "*".repeat(character.stars);
+  ctx.fillText(starsText, 50, 150);
+  const specialButton: any = document.getElementById("special");
+  if (specialGauge.value >= specialGauge.maxValue) {
+    specialButton.disabled = false;
+  } else {
+    specialButton.disabled = true;
+  }
 }
 
 /// Perform an attack
 function attack() {
   const characterDamage = Math.floor(Math.random() * character.damage);
   const enemyDamage = Math.floor(Math.random() * randomEnemy.damage);
+  const randomGauge = Math.floor(Math.random() * 10);
 
   // Update character and enemy health
   character.health -= enemyDamage;
   randomEnemy.health -= characterDamage;
+  if(character.health <= 0){
+    character.stars -= 1
+  }
+  specialGauge.value += randomGauge;
 
   // Redraw the battle
   drawBattle(ctx, characterImage, enemyImage);
@@ -156,6 +173,12 @@ function attack() {
     } else {
       winner = character.name;
     }
+    const specialButton: any = document.getElementById("special");
+    
+    if (specialGauge.value >= specialGauge.maxValue) {
+    specialButton.disabled = false;
+    }
+    
 
     ctx.fillText(`The battle is over! ${winner} wins!`, canvas.width / 2, 10000);
 
@@ -164,22 +187,255 @@ function attack() {
     );
     if (continueBattle) {
       resetGame();
+      console.log(specialGauge.value)
+    } 
+    else {
+      if (defeatedEnemies.length === enemies.length) {
+        alert("All enemies are defeated! Resetting the game...");
+        resetGame();
+      } else {
+        redirectToCharacterSelection();
+      }
+    }
+    if(character.stars <= 0){
+      let starReader = confirm(`You have run out of stars. Proceed to Character Selection`)
+      if(starReader){
+        redirectToCharacterSelection()
+        console.log(character.stars)
+      }
+    }
+  }
+}
+
+function poke() {
+  const characterDamage = Math.floor(Math.random() * character.damage);
+  const enemyDamage = Math.floor(Math.random() * randomEnemy.damage);
+  const randomGauge = Math.floor(Math.random() * 10);
+
+  // Update character and enemy health
+  character.health -= enemyDamage * 1.5;
+  randomEnemy.health -= characterDamage * 1.5;
+  if(character.health <= 0){
+    character.stars -= 1
+  }
+  specialGauge.value += randomGauge;
+
+  // Redraw the battle
+  drawBattle(ctx, characterImage, enemyImage);
+
+  // Display attack result on the canvas
+  ctx.font = "16px Arial";
+  ctx.fillStyle = "white";
+  ctx.fillText(
+    `${character.name} attacks for ${characterDamage} damage!`,
+    50,
+    250
+  );
+  ctx.fillText(
+    `${randomEnemy.name} attacks for ${enemyDamage} damage!`,
+    550,
+    250
+  );
+
+  // Check if the battle is over
+  if (character.health <= 0 || randomEnemy.health <= 0) {
+    let winner;
+    character.stars -= 1
+    if (character.health <= 0 && randomEnemy.health <= 0) {
+      winner = "It's a tie!";
+    } else if (character.health <= 0) {
+      winner = randomEnemy.name;
     } else {
-      redirectToCharacterSelection();
+      winner = character.name;
+    }
+    const specialButton: any = document.getElementById("special");
+    
+    if (specialGauge.value >= specialGauge.maxValue) {
+    specialButton.disabled = false;
+    }
+    
+
+    ctx.fillText(`The battle is over! ${winner} wins!`, canvas.width / 2, 10000);
+
+    const continueBattle = confirm(
+      `The battle is over! Do you want to continue?`
+    );
+    if (continueBattle) {
+      resetGame();
+    } 
+    else {
+      if (defeatedEnemies.length === enemies.length) {
+        alert("All enemies are defeated! Resetting the game...");
+        resetGame();
+      } else {
+        redirectToCharacterSelection();
+      }
+    }
+    if(character.stars <= 0){
+      let starReader = confirm(`You have run out of stars. Proceed to Character Selection`)
+      if(starReader){
+        redirectToCharacterSelection()
+        console.log(character.stars)
+      }
+    }
+  }
+}
+
+function charge() {
+  const characterDamage = Math.floor(Math.random() * character.damage);
+  const enemyDamage = Math.floor(Math.random() * randomEnemy.damage);
+  const randomGauge = Math.floor(Math.random() * 10);
+
+  // Update character and enemy health
+  character.health -= enemyDamage * 2;
+  randomEnemy.health -= characterDamage * 2;
+  if(character.health <= 0){
+    character.stars -= 1
+  }
+  specialGauge.value += randomGauge;
+
+  // Redraw the battle
+  drawBattle(ctx, characterImage, enemyImage);
+
+  // Display attack result on the canvas
+  ctx.font = "16px Arial";
+  ctx.fillStyle = "white";
+  ctx.fillText(
+    `${character.name} attacks for ${characterDamage} damage!`,
+    50,
+    250
+  );
+  ctx.fillText(
+    `${randomEnemy.name} attacks for ${enemyDamage} damage!`,
+    550,
+    250
+  );
+
+  // Check if the battle is over
+  if (character.health <= 0 || randomEnemy.health <= 0) {
+    let winner;
+    character.stars -= 1
+    if (character.health <= 0 && randomEnemy.health <= 0) {
+      winner = "It's a tie!";
+    } else if (character.health <= 0) {
+      winner = randomEnemy.name;
+    } else {
+      winner = character.name;
+    }
+    const specialButton: any = document.getElementById("special");
+    
+    if (specialGauge.value >= specialGauge.maxValue) {
+    specialButton.disabled = false;
+    }
+    
+
+    ctx.fillText(`The battle is over! ${winner} wins!`, canvas.width / 2, 10000);
+
+    const continueBattle = confirm(
+      `The battle is over! Do you want to continue?`
+    );
+    if (continueBattle) {
+      resetGame();
+    } 
+    else {
+      if (defeatedEnemies.length === enemies.length) {
+        alert("All enemies are defeated! Resetting the game...");
+        resetGame();
+      } else {
+        redirectToCharacterSelection();
+      }
+    }
+    if(character.stars <= 0){
+      let starReader = confirm(`You have run out of stars. Proceed to Character Selection`)
+      if(starReader){
+        redirectToCharacterSelection()
+        console.log(character.stars)
+      }
+    }
+  }
+}
+
+function special() {
+  const characterDamage = Math.floor(Math.random() * character.damage);
+  const enemyDamage = Math.floor(Math.random() * randomEnemy.damage);
+
+  // Update character and enemy health
+  character.health -= enemyDamage * 3;
+  randomEnemy.health -= characterDamage * 3;
+  if(character.health <= 0){
+    character.stars -= 1
+  }
+  
+
+  // Redraw the battle
+  drawBattle(ctx, characterImage, enemyImage);
+
+  // Display attack result on the canvas
+  ctx.font = "16px Arial";
+  ctx.fillStyle = "white";
+  ctx.fillText(
+    `${character.name} attacks for ${characterDamage} damage!`,
+    50,
+    250
+  );
+  ctx.fillText(
+    `${randomEnemy.name} attacks for ${enemyDamage} damage!`,
+    550,
+    250
+  );
+
+  // Check if the battle is over
+  if (character.health <= 0 || randomEnemy.health <= 0) {
+    let winner;
+    character.stars -= 1
+    if (character.health <= 0 && randomEnemy.health <= 0) {
+      winner = "It's a tie!";
+    } else if (character.health <= 0) {
+      winner = randomEnemy.name;
+    } else {
+      winner = character.name;
+    }
+    const specialButton: any = document.getElementById("special");
+    
+    specialButton.disabled = true
+    specialGauge.value = 0
+    
+
+    ctx.fillText(`The battle is over! ${winner} wins!`, canvas.width / 2, 10000);
+
+    const continueBattle = confirm(
+      `The battle is over! Do you want to continue?`
+    );
+    if (continueBattle) {
+      resetGame();
+    } 
+    else {
+      if (defeatedEnemies.length === enemies.length) {
+        alert("All enemies are defeated! Resetting the game...");
+        resetGame();
+      } else {
+        redirectToCharacterSelection();
+      }
+    }
+    if(character.stars <= 0){
+      let starReader = confirm(`You have run out of stars. Proceed to Character Selection`)
+      if(starReader){
+        redirectToCharacterSelection()
+        console.log(character.stars)
+      }
     }
   }
 }
 
 // Reset the game with a new random enemy
 function resetGame() {
-  character.health = 100;
-  enemies.forEach((enemy) => {
-    enemy.health = 100;
-  });
+  character.health = 200;
+  defeatedEnemies.push(randomEnemy);
   randomEnemy = getRandomEnemy();
   enemyImage.src = randomEnemy.image;
 
   drawBattle(ctx, characterImage, enemyImage);
+
 }
 
 // Redirect to character selection HTML
@@ -187,11 +443,20 @@ function redirectToCharacterSelection() {
   window.location.href = "index.html";
 }
 
-function getRandomEnemy() {
-  // Filter out defeated enemies
-  const availableEnemies = enemies.filter((enemy) => enemy.health > 0);
+function getRandomEnemy(): any {
+  const availableEnemies = enemies.filter(
+    (enemy) => !defeatedEnemies.includes(enemy)
+  );
 
-  // Return a random enemy from the availableEnemies array
+  if (availableEnemies.length === 0) {
+    const continueBattle = confirm(
+      "Congratulations! You have defeated all enemies! Redirecting to Character Selection....."
+    );
+    if (continueBattle) {
+      redirectToCharacterSelection()
+    } 
+  }
+
   return availableEnemies[Math.floor(Math.random() * availableEnemies.length)];
 }
 
@@ -202,10 +467,60 @@ function initializeBattle() {
 
   // Add event listener to the attack button
   const attackButton = document.getElementById("attack");
+  const pokeButton = document.getElementById("poke");
+  const chargeButton = document.getElementById("charge");
+  const specialButton: any = document.getElementById("special");
+  specialButton.disabled = true
   if (attackButton) {
     attackButton.addEventListener("click", attack);
+  }
+  if (pokeButton) {
+    pokeButton.addEventListener("click", poke);
+  }
+  if (chargeButton) {
+    chargeButton.addEventListener("click", charge);
+  }
+  if (specialButton) {
+    specialButton.addEventListener("click", special);
   }
 }
 
 // Call the initializeBattle function to start the battle
 initializeBattle();
+
+const attackButton = document.getElementById("attack");
+const pokeButton = document.getElementById("poke");
+const chargeButton = document.getElementById("charge");
+const specialButton: any = document.getElementById("special");
+specialButton.disabled = true;
+
+function handleButtonClick(event: Event) {
+  const clickedButton = event.target as HTMLButtonElement;
+
+  if (clickedButton === attackButton) {
+    attack();
+  } else if (clickedButton === pokeButton) {
+    poke();
+  } else if (clickedButton === chargeButton) {
+    charge();
+  } else if (clickedButton === specialButton) {
+    special();
+  }
+}
+
+if (attackButton) {
+  attackButton.addEventListener("click", handleButtonClick);
+}
+
+if (pokeButton) {
+  pokeButton.addEventListener("click", handleButtonClick);
+}
+
+if (chargeButton) {
+  chargeButton.addEventListener("click", handleButtonClick);
+}
+
+if (specialButton) {
+  specialButton.addEventListener("click", handleButtonClick);
+}
+
