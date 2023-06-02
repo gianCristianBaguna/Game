@@ -1,73 +1,84 @@
-let canvas = document.getElementById('battleCanvas') as HTMLCanvasElement;
-let ctx = canvas.getContext('2d');
+let canvas = document.getElementById("battleCanvas") as HTMLCanvasElement;
+let ctx = canvas.getContext("2d");
 
 const character = {
-  name: '',
+  name: "",
   health: 100,
   damage: 20,
-  image: 'assets/dragonBalls/goku.png',
+  image: localStorage.getItem("img") ?? "",
+  statisticalPoints: 5,
 };
 
 const enemies = [
   {
-    name: 'Goku',
+    name: "Goku",
     health: 100,
     damage: 20,
-    image: 'assets/dragonBalls/goku.png',
+    image: "assets/dragonBalls/goku.png",
+    statisticalPoints: 5,
   },
   {
-    name: 'Gohan',
+    name: "Gohan",
     health: 100,
     damage: 15,
-    image: 'assets/dragonBalls/gohan.png',
+    image: "assets/dragonBalls/gohan.png",
+    statisticalPoints: 100,
   },
   {
-    name: 'Trunks',
+    name: "Trunks",
     health: 100,
     damage: 15,
-    image: 'assets/dragonBalls/trunks.png',
+    image: "assets/dragonBalls/trunks.png",
+    statisticalPoints: 100,
   },
   {
-    name: 'Android 18',
+    name: "Android 18",
     health: 100,
     damage: 15,
-    image: 'assets/dragonBalls/android18.png',
+    image: "assets/dragonBalls/android18.png",
+    statisticalPoints: 100,
   },
   {
-    name: 'Krilin',
+    name: "Krilin",
     health: 100,
     damage: 15,
-    image: 'assets/dragonBalls/krilin.png',
+    image: "assets/dragonBalls/krilin.png",
+    statisticalPoints: 100,
   },
   {
-    name: 'Captain America',
+    name: "Captain America",
     health: 100,
     damage: 15,
-    image: 'assets/marvel/captainAmerica.png',
+    image: "assets/marvel/captainAmerica.png",
+    statisticalPoints: 100,
   },
   {
-    name: 'Iron Man',
+    name: "Iron Man",
     health: 100,
     damage: 15,
-    image: 'assets/marvel/ironman.png',
+    image: "assets/marvel/ironman.png",
+    statisticalPoints: 100,
   },
   {
-    name: 'Thor',
+    name: "Thor",
     health: 100,
     damage: 15,
-    image: 'assets/marvel/thor.png',
+    image: "assets/marvel/thor.png",
+    statisticalPoints: 100,
   },
   {
-    name: 'Hulk',
+    name: "Hulk",
     health: 100,
     damage: 15,
-    image: 'assets/marvel/hulk.png',
+    image: "assets/marvel/hulk.png",
+    statisticalPoints: 100,
   },
   {
-    name: 'Spiderman',
+    name: "Spiderman",
     health: 100,
     damage: 15,
-    image: 'assets/marvel/spiderman.png',
+    image: "assets/marvel/spiderman.png",
+    statisticalPoints: 100,
   },
 ];
 
@@ -86,65 +97,78 @@ if (enemyFlip) {
   };
 } else {
   enemyImage.onload = () => {
-    enemyImage.style.transform = 'scaleX(-1)';
+    enemyImage.style.transform = "scaleX(-1)";
     drawBattle(ctx, characterImage, enemyImage);
   };
 }
 
-function drawBattle(ctx: CanvasRenderingContext2D, characterImage: HTMLImageElement, enemyImage: HTMLImageElement) {
+function drawBattle(
+  ctx: CanvasRenderingContext2D,
+  characterImage: HTMLImageElement,
+  enemyImage: HTMLImageElement
+) {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   ctx.drawImage(characterImage, 50, 200);
   ctx.scale(-1, 1);
   ctx.drawImage(enemyImage, -550, 200);
 
-  ctx.fillStyle = 'green';
+  ctx.fillStyle = "green";
   ctx.fillRect(50, 180, character.health, 10);
 
-  ctx.fillStyle = 'green';
+  ctx.fillStyle = "green";
   ctx.fillRect(550, 180, randomEnemy.health, 10);
 }
 
 /// Perform an attack
 function attack() {
-	const characterDamage = Math.floor(Math.random() * character.damage);
-	const enemyDamage = Math.floor(Math.random() * randomEnemy.damage);
-  
-	// Update character and enemy health
-	character.health -= enemyDamage;
-	randomEnemy.health -= characterDamage;
-  
-	// Redraw the battle
-	drawBattle(ctx, characterImage, enemyImage);
-  
-	// Display attack result on the canvas
-	ctx.font = '16px Arial';
-	ctx.fillStyle = 'white';
-	ctx.fillText(`${character.name} attacks for ${characterDamage} damage!`, 50, 250);
-	ctx.fillText(`${randomEnemy.name} attacks for ${enemyDamage} damage!`, 550, 250);
-  
-	// Check if the battle is over
-	if (character.health <= 0 || randomEnemy.health <= 0) {
-	  let winner;
-	  if (character.health <= 0 && randomEnemy.health <= 0) {
-		winner = "It's a tie!";
-	  } else if (character.health <= 0) {
-		winner = randomEnemy.name;
-	  } else {
-		winner = character.name;
-	  }
-  
-	  ctx.fillText(`The battle is over! ${winner} wins!`, canvas.width / 2, 300);
-  
-	  const continueBattle = confirm(`The battle is over! Do you want to continue?`);
-	  if (continueBattle) {
-		resetGame();
-	  } else {
-		redirectToCharacterSelection();
-	  }
-	}
+  const characterDamage = Math.floor(Math.random() * character.damage);
+  const enemyDamage = Math.floor(Math.random() * randomEnemy.damage);
+
+  // Update character and enemy health
+  character.health -= enemyDamage;
+  randomEnemy.health -= characterDamage;
+
+  // Redraw the battle
+  drawBattle(ctx, characterImage, enemyImage);
+
+  // Display attack result on the canvas
+  ctx.font = "16px Arial";
+  ctx.fillStyle = "white";
+  ctx.fillText(
+    `${character.name} attacks for ${characterDamage} damage!`,
+    50,
+    250
+  );
+  ctx.fillText(
+    `${randomEnemy.name} attacks for ${enemyDamage} damage!`,
+    550,
+    250
+  );
+
+  // Check if the battle is over
+  if (character.health <= 0 || randomEnemy.health <= 0) {
+    let winner;
+    if (character.health <= 0 && randomEnemy.health <= 0) {
+      winner = "It's a tie!";
+    } else if (character.health <= 0) {
+      winner = randomEnemy.name;
+    } else {
+      winner = character.name;
+    }
+
+    ctx.fillText(`The battle is over! ${winner} wins!`, canvas.width / 2, 10000);
+
+    const continueBattle = confirm(
+      `The battle is over! Do you want to continue?`
+    );
+    if (continueBattle) {
+      resetGame();
+    } else {
+      redirectToCharacterSelection();
+    }
   }
-  
+}
 
 // Reset the game with a new random enemy
 function resetGame() {
@@ -160,12 +184,15 @@ function resetGame() {
 
 // Redirect to character selection HTML
 function redirectToCharacterSelection() {
-  window.location.href = 'index.html';
+  window.location.href = "index.html";
 }
 
-// Randomly select an enemy from the array
 function getRandomEnemy() {
-  return enemies[Math.floor(Math.random() * enemies.length)];
+  // Filter out defeated enemies
+  const availableEnemies = enemies.filter((enemy) => enemy.health > 0);
+
+  // Return a random enemy from the availableEnemies array
+  return availableEnemies[Math.floor(Math.random() * availableEnemies.length)];
 }
 
 // Initialize the battle
@@ -174,9 +201,9 @@ function initializeBattle() {
   drawBattle(ctx, characterImage, enemyImage);
 
   // Add event listener to the attack button
-  const attackButton = document.getElementById('attack');
+  const attackButton = document.getElementById("attack");
   if (attackButton) {
-    attackButton.addEventListener('click', attack);
+    attackButton.addEventListener("click", attack);
   }
 }
 
